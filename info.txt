@@ -1,6 +1,21 @@
 
 1. script to init mariadb
-https://mkyong.com/docker/how-to-run-an-init-script-for-docker-mariadb/?utm_source=chatgpt.com
+https://mkyong.com/docker/how-to-run-an-init-script-for-docker-mariadb/
 
 2. create a db in a container guide
 https://docs.docker.com/guides/databases/
+
+3. tutorial
+https://github.com/vbachele/Inception
+
+4. tutorial
+https://blog.rosnertech.com.br/arquivos/856
+
+5. creating custom mariadb image
+https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/installing-mariadb/binary-packages/automated-mariadb-deployment-and-administration/docker-and-mariadb/creating-a-custom-container-image
+
+6. cmd/run/entrypoint
+https://www.docker.com/blog/docker-best-practices-choosing-between-run-cmd-and-entrypoint/
+
+7. config file for mariadb
+https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/configuring-mariadb/configuring-mariadb-with-option-files
