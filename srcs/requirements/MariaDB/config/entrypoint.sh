@@ -1,7 +1,6 @@
-# Shell + SQL Initialization Script Checklist
-
-# Script header
 #!/bin/sh
+# Script header
+
 
 # Wait for MariaDB service to run
 
