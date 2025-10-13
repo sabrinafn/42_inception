@@ -1,13 +1,17 @@
 #!/bin/sh
-# Script header
+set -e
 
+# init directory in which it has system tables
+[ ! -d "/var/lib/mysql/mysql" ] && mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-# Wait for MariaDB service to run
+# Configure root user
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'pass123';"
 
-# Set the root password
+# Create database
+mysql -e "CREATE DATABASE IF NOT EXISTS db;"
 
-# Create the initial database
+# Grant privileges to root user
+mysql -e "GRANT ALL PRIVILEGES ON db.* TO 'root'@'localhost'; FLUSH PRIVILEGES;"
 
-# Apply privileges
-
-# Keep MariaDB running, ensure the MariaDB process stays in the foreground so the container does not exit.
+# Execute mariadb
+exec runuser -u mysql -- mariadbd --console
