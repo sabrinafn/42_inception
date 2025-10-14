@@ -1,17 +1,4 @@
 services:
- MariaDB:
-  build:
-    context: .
-  ports:
-   - "3306:3306"
-  env_file:
-   - .env
-  volumes:
-   - ./db_init:/docker-entrypoint-initdb.d
-   - ./db_data:/var/lib/mysql
-  healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      start_period: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 3
+  mariadb:
+    build: requirements/mariadb/.
+    container_name: mariadb
