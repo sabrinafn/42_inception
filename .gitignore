@@ -1,0 +1,13 @@
+# Docker database
+srcs/database/
+
+# WordPress core and runtime files (generated during init)
+srcs/web/**
+!srcs/web/wp-content/
+srcs/web/wp-content/**
+!srcs/web/wp-content/themes/**
+!srcs/web/wp-content/plugins/**
+srcs/web/wp-content/uploads/
+
+# logs
+*.log
