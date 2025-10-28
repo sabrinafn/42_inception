@@ -6,6 +6,10 @@ services:
       - ./database:/var/lib/mysql
     networks:
       inception:
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
   nginx:
     build: requirements/nginx/.
     container_name: nginx

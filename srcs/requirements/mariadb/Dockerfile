@@ -6,7 +6,7 @@ RUN apt update \
     && apt upgrade -y \
     && apt install -y mariadb-server
 
-COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/.
+COPY config/my.cnf /etc/mysql/mariadb.conf.d/.
 COPY config/init.sql /etc/mysql/init.sql
 COPY config/entrypoint.sh /usr/local/bin/entrypoint.sh
 
