@@ -5,7 +5,6 @@ WP_PATH=/var/www/html
 
 for i in $(seq 1 30); do
     if (echo > /dev/tcp/${MARIADB_HOST}/${MARIADB_PORT}) >/dev/null 2>&1; then
-        echo "MariaDB disponível."
         break
     fi
     sleep 1

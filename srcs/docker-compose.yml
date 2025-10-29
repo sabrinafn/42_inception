@@ -3,13 +3,19 @@ services:
     build: requirements/mariadb/.
     container_name: mariadb
     volumes:
-      - ./database:/var/lib/mysql
+      - /home/sabrifer/data/database:/var/lib/mysql
     networks:
       inception:
     env_file:
       - .env
     secrets:
       - mariadb_root_password
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
   nginx:
     build: requirements/nginx/.
     container_name: nginx
@@ -27,13 +33,14 @@ services:
     build: requirements/wordpress/.
     container_name: wp-php
     volumes:
-      - ./web:/var/www/html
+      - /home/sabrifer/data/wordpress:/var/www/html
     networks:
       inception:
     env_file:
       - .env
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
 
 networks:
   inception:
