@@ -10,6 +10,8 @@ services:
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    secrets:
+      - mariadb_root_password
   nginx:
     build: requirements/nginx/.
     container_name: nginx
@@ -29,3 +31,7 @@ services:
 
 networks:
   inception:
+
+secrets:
+  mariadb_root_password:
+    file: ../secrets/db_root_password.txt
