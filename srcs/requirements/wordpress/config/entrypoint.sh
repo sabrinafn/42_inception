@@ -10,6 +10,10 @@ for i in $(seq 1 30); do
     sleep 1
 done
 
+if [ ! -e "${WP_PATH}/wp-includes/version.php" ]; then
+    wp core download --allow-root --path="${WP_PATH}"
+fi
+
 if [ ! -f "${WP_PATH}/wp-config.php" ]; then
     wp config create \
         --allow-root \
