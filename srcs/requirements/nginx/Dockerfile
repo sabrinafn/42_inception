@@ -6,6 +6,8 @@ RUN apt update \
     && apt upgrade -y \
     && apt install -y nginx
 
-COPY default /etc/nginx/sites-available/.
+COPY config/default /etc/nginx/sites-available/.
+COPY certificates/sabrifer.42.fr.crt /etc/ssl/certs/
+COPY certificates/sabrifer.42.fr.key /etc/ssl/private/
 
 CMD ["nginx", "-g", "daemon off;"]
