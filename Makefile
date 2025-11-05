@@ -1,6 +1,8 @@
 COMPOSE = docker compose -f srcs/docker-compose.yml -p inception
 SERVICE ?=
 
+all: build up
+
 build:
 	$(COMPOSE) build $(SERVICE)
 

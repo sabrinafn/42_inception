@@ -10,6 +10,7 @@ services:
       - .env
     secrets:
       - mariadb_root_password
+      - mariadb_password
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       start_period: 10s
@@ -20,9 +21,9 @@ services:
     build: requirements/nginx/.
     container_name: nginx
     ports:
-      - 80:80
+      - 443:443
     volumes:
-      - ./web:/var/www/html
+      - /home/sabrifer/data/wordpress:$WP_PATH:ro
     networks:
       inception:
     env_file:
@@ -31,13 +32,16 @@ services:
       - wordpress
   wordpress:
     build: requirements/wordpress/.
-    container_name: wp-php
+    container_name: wordpress
     volumes:
-      - /home/sabrifer/data/wordpress:/var/www/html
+      - /home/sabrifer/data/wordpress:$WP_PATH
     networks:
       inception:
     env_file:
       - .env
+    secrets:
+      - wp_admin_password
+      - wp_user_password
     depends_on:
       mariadb:
         condition: service_healthy
@@ -48,3 +52,9 @@ networks:
 secrets:
   mariadb_root_password:
     file: ../secrets/db_root_password.txt
+  mariadb_password:
+    file: ../secrets/db_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
