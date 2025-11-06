@@ -3,7 +3,7 @@ services:
     build: requirements/mariadb/.
     container_name: mariadb
     volumes:
-      - /home/sabrifer/data/database:/var/lib/mysql
+      - ${DATA_DIR}/database:/var/lib/mysql
     networks:
       inception:
     env_file:
@@ -23,7 +23,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - /home/sabrifer/data/wordpress:$WP_PATH:ro
+      - ${DATA_DIR}/wordpress:${WP_PATH}:ro
     networks:
       inception:
     env_file:
@@ -34,7 +34,7 @@ services:
     build: requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - /home/sabrifer/data/wordpress:$WP_PATH
+      - ${DATA_DIR}/wordpress:${WP_PATH}
     networks:
       inception:
     env_file:
@@ -42,6 +42,7 @@ services:
     secrets:
       - wp_admin_password
       - wp_user_password
+      - mariadb_password
     depends_on:
       mariadb:
         condition: service_healthy

@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+export MARIADB_ROOT_PASSWORD="$(cat /run/secrets/mariadb_root_password)"
+export MARIADB_PASSWORD="$(cat /run/secrets/mariadb_password)"
+
 mkdir -p /var/lib/mysql /run/mysqld
 chown -R mysql:mysql /var/lib/mysql /run/mysqld
 
