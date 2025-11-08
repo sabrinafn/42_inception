@@ -1,9 +1,10 @@
 services:
+
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
     volumes:
-      - ${DATA_DIR}/database:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     networks:
       inception:
     env_file:
@@ -17,24 +18,26 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
   nginx:
     build: requirements/nginx/.
     container_name: nginx
     ports:
       - 443:443
     volumes:
-      - ${DATA_DIR}/wordpress:${WP_PATH}:ro
+      - wordpress_data:/var/www/wordpress:ro
     networks:
       inception:
     env_file:
       - .env
     depends_on:
       - wordpress
+
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - ${DATA_DIR}/wordpress:${WP_PATH}
+      - wordpress_data:/var/www/wordpress
     networks:
       inception:
     env_file:
@@ -47,8 +50,25 @@ services:
       mariadb:
         condition: service_healthy
 
+volumes:
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /nfs/homes/sabrifer/data/mysql
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /nfs/homes/sabrifer/data/wordpress
+
 networks:
   inception:
+    driver: bridge
 
 secrets:
   mariadb_root_password:
