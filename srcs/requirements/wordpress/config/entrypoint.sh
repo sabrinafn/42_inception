@@ -5,6 +5,9 @@ export WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 export WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 export MARIADB_PASSWORD="$(cat /run/secrets/mariadb_password)"
 
+config_file="/etc/php/8.2/fpm/pool.d/www.conf"
+sed -ri 's|^;?\s*listen\s*=.*$|listen = 0.0.0.0:9000|' "$config_file"
+
 for i in $(seq 1 30); do
     if (echo > /dev/tcp/${MARIADB_HOST}/${MARIADB_PORT}) >/dev/null 2>&1; then
         break
