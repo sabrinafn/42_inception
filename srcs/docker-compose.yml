@@ -4,7 +4,7 @@ services:
     build: requirements/mariadb/.
     container_name: mariadb
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb_volume:/var/lib/mysql
     networks:
       inception:
     env_file:
@@ -25,7 +25,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - wordpress_data:/var/www/wordpress:ro
+      - wordpress_volume:/var/www/wordpress:ro
     networks:
       inception:
     env_file:
@@ -37,7 +37,7 @@ services:
     build: requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - wordpress_data:/var/www/wordpress
+      - wordpress_volume:/var/www/wordpress
     networks:
       inception:
     env_file:
@@ -52,14 +52,14 @@ services:
 
 volumes:
 
-  mariadb_data:
+  mariadb_volume:
     driver: local
     driver_opts:
       o: bind
       type: none
       device: ${DATA_DIR}/mysql
 
-  wordpress_data:
+  wordpress_volume:
     driver: local
     driver_opts:
       o: bind

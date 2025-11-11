@@ -4,7 +4,6 @@ SERVICE ?=
 all: prepare-dirs build up
 
 prepare-dirs:
-	@echo "Criando diretórios em /home/sabrifer/data ..."
 	@sudo mkdir -p /home/sabrifer/data/mysql /home/sabrifer/data/wordpress
 	@sudo chown -R $$(id -u):$$(id -g) /home/sabrifer/data
 
