@@ -1,10 +1,15 @@
 COMPOSE = docker compose -f srcs/docker-compose.yml -p inception
 SERVICE ?=
 
-all: build up
+all: prepare-dirs build up
+
+prepare-dirs:
+	@echo "Criando diretórios em /home/sabrifer/data ..."
+	@sudo mkdir -p /home/sabrifer/data/mysql /home/sabrifer/data/wordpress
+	@sudo chown -R $$(id -u):$$(id -g) /home/sabrifer/data
 
 build:
-	$(COMPOSE) build $(SERVICE)
+	$(COMPOSE) build $(SERVICE)    
 
 up:
 	$(COMPOSE) up -d $(SERVICE)
@@ -19,8 +24,8 @@ ultra-full-clean: clean
 	docker builder prune -af
 	docker system prune -af --volumes
 
-rebuild:
+rebuild: prepare-dirs
 	$(COMPOSE) build --no-cache $(SERVICE)
 	$(COMPOSE) up -d $(SERVICE)
 
-.PHONY: build up down clean ultra-full-clean rebuild
+.PHONY: prepare-dirs build up down clean ultra-full-clean rebuild

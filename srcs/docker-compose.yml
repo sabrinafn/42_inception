@@ -57,14 +57,14 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /nfs/homes/sabrifer/data/mysql
+      device: ${DATA_DIR}/mysql
 
   wordpress_data:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /nfs/homes/sabrifer/data/wordpress
+      device: ${DATA_DIR}/wordpress
 
 networks:
   inception:
