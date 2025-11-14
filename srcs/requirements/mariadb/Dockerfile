@@ -1,7 +1,5 @@
-# base image
 FROM debian:bookworm
 
-# update packages and install mariadb
 RUN apt update \
     && apt upgrade -y \
     && apt install -y mariadb-server
@@ -13,5 +11,4 @@ RUN mkdir /run/mysqld \
 
 EXPOSE 3306
 
-# run as non-root user
 CMD ["/usr/local/bin/entrypoint.sh"]

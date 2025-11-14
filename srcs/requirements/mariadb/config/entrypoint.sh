@@ -21,7 +21,6 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --datadir=/var/lib/mysql > /dev/null
 fi
 
-# init mariadb
 exec mysqld_safe --datadir=/var/lib/mysql \
     --bind-address=0.0.0.0 \
     --init-file=/etc/mysql/init.sql
