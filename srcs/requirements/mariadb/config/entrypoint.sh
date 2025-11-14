@@ -22,4 +22,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 fi
 
 # init mariadb
-exec mysqld_safe --datadir=/var/lib/mysql
+exec mysqld_safe --datadir=/var/lib/mysql \
+    --bind-address=0.0.0.0 \
+    --init-file=/etc/mysql/init.sql
+
