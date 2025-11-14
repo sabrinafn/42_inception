@@ -1,11 +1,25 @@
 COMPOSE = docker compose -f srcs/docker-compose.yml -p inception
 SERVICE ?=
+PROJECT_ENV_URL = https://raw.githubusercontent.com/sabrinafn/42_inception/refs/heads/main/
 
-all: prepare-dirs build up
+all: prepare-files build up
 
-prepare-dirs:
+prepare-files:
 	@sudo mkdir -p /home/sabrifer/data/mysql /home/sabrifer/data/wordpress
 	@sudo chown -R $$(id -u):$$(id -g) /home/sabrifer/data
+
+	@if [ ! -f ./srcs/.env ]; then \
+		curl -fsSL "$(PROJECT_ENV_URL)/srcs/.env" -o ./srcs/.env; \
+		else echo ".env file already exists!"; \
+	fi
+	@if [ ! -d ./secrets ]; then \
+		mkdir ./secrets; \
+		curl -fsSL "$(PROJECT_ENV_URL)/secrets/db_password.txt" -o ./secrets/db_password.txt; \
+		curl -fsSL "$(PROJECT_ENV_URL)/secrets/db_root_password.txt" -o ./secrets/db_root_password.txt; \
+		curl -fsSL "$(PROJECT_ENV_URL)/secrets/wp_admin_password.txt" -o ./secrets/wp_admin_password.txt; \
+		curl -fsSL "$(PROJECT_ENV_URL)/secrets/wp_user_password.txt" -o ./secrets/wp_user_password.txt; \
+		else echo "secrets directory already exists!"; \
+	fi
 
 build:
 	$(COMPOSE) build $(SERVICE)    
@@ -17,14 +31,14 @@ down:
 	$(COMPOSE) down
 
 clean:
-	$(COMPOSE) down -v --rmi local --remove-orphans
+	$(COMPOSE) down -v
 
-ultra-full-clean: clean
+fclean: clean
 	docker builder prune -af
 	docker system prune -af --volumes
 
-rebuild: prepare-dirs
+re: fclean prepare-files
 	$(COMPOSE) build --no-cache $(SERVICE)
 	$(COMPOSE) up -d $(SERVICE)
 
-.PHONY: prepare-dirs build up down clean ultra-full-clean rebuild
+.PHONY: prepare-files build up down clean fclean re
