@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-export WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
-export WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
+export WP_ADMIN_PASSWORD="$(cat /run/secrets/wp_admin_password)"
+export WP_USER_PASSWORD="$(cat /run/secrets/wp_user_password)"
 export MARIADB_PASSWORD="$(cat /run/secrets/mariadb_password)"
 
 config_file="/etc/php/8.2/fpm/pool.d/www.conf"
