@@ -10,7 +10,6 @@ prepare-files:
 
 	@if [ ! -f ./srcs/.env ]; then \
 		curl -fsSL "$(PROJECT_ENV_URL)/srcs/.env" -o ./srcs/.env; \
-		else echo ".env file already exists!"; \
 	fi
 	@if [ ! -d ./secrets ]; then \
 		mkdir ./secrets; \
@@ -18,7 +17,11 @@ prepare-files:
 		curl -fsSL "$(PROJECT_ENV_URL)/secrets/db_root_password.txt" -o ./secrets/db_root_password.txt; \
 		curl -fsSL "$(PROJECT_ENV_URL)/secrets/wp_admin_password.txt" -o ./secrets/wp_admin_password.txt; \
 		curl -fsSL "$(PROJECT_ENV_URL)/secrets/wp_user_password.txt" -o ./secrets/wp_user_password.txt; \
-		else echo "secrets directory already exists!"; \
+	fi
+	@if [ ! -d ./srcs/requirements/nginx/certificates ]; then \
+		mkdir -p ./srcs/requirements/nginx/certificates; \
+		curl -fsSL "$(PROJECT_ENV_URL)/srcs/requirements/nginx/certificates/sabrifer.42.fr.crt" -o ./srcs/requirements/nginx/certificates/sabrifer.42.fr.crt; \
+		curl -fsSL "$(PROJECT_ENV_URL)/srcs/requirements/nginx/certificates/sabrifer.42.fr.key" -o ./srcs/requirements/nginx/certificates/sabrifer.42.fr.key; \
 	fi
 
 build:
