@@ -40,8 +40,6 @@ fclean: clean
 	docker builder prune -af
 	docker system prune -af --volumes
 
-re: fclean prepare-files
-	$(COMPOSE) build --no-cache $(SERVICE)
-	$(COMPOSE) up -d $(SERVICE)
+re: fclean all
 
 .PHONY: prepare-files build up down clean fclean re
