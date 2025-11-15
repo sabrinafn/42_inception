@@ -6,7 +6,7 @@ services:
     volumes:
       - mariadb_volume:/var/lib/mysql
     networks:
-      inception:
+      - my_network
     env_file:
       - .env
     secrets:
@@ -27,7 +27,7 @@ services:
     volumes:
       - wordpress_volume:/var/www/wordpress:ro
     networks:
-      inception:
+      - my_network
     env_file:
       - .env
     depends_on:
@@ -39,7 +39,7 @@ services:
     volumes:
       - wordpress_volume:/var/www/wordpress
     networks:
-      inception:
+      - my_network
     env_file:
       - .env
     secrets:
@@ -67,7 +67,7 @@ volumes:
       device: ${DATA_DIR}/wordpress
 
 networks:
-  inception:
+  my_network:
     driver: bridge
 
 secrets:
